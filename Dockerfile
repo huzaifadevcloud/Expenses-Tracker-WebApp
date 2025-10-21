@@ -30,9 +30,13 @@ FROM openjdk:17-alpine
 
 WORKDIR /app 
 
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+
 # Copy build from stage 1 (builder)
 
 COPY --from=builder /app/target/*.jar /app/target/expenseapp.jar
+
+USER appuser
 
 # Expose application port 
 
